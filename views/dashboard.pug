@@ -1,9 +1,32 @@
 extends layout.pug
 
 block body
-      .max-w-md.w-full
-        div.text-center
-          h2.mt-6.text-center.text-3xl.leading-9.font-extrabold
-            | Welcome
-          a.mt-6.text-center.text-1xl.leading-9.font-extrabold.text-indigo-500(href='/post')
-            | Post a message 
+  .max-w-md.w-full
+    div.text-center
+      h2.mt-6.text-center.text-3xl.leading-9.font-extrabold
+        | Welcome #{currentUsername}
+      a.mt-6.text-center.text-1xl.leading-9.font-extrabold.text-indigo-500(href='/post')
+        | Post a message
+      if timeline.length > 0
+        h3.mt-6.text-center.text-xl.leading-9.font-extrabold.text-gray
+          | Latest posts
+        .flex.flex-col
+          .-my-2.py-2.overflow-x-auto(class='sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8')
+            div(class='sm:rounded-lg')
+              table.min-w-full
+                tbody.bg-white
+                  each message in timeline
+                    tr
+                      td.px-6.py-4.whitespace-no-wrap.border-b.border-gray
+                        =message.message
+                        p.pt-3.whitespace-no-wrap.text-xs.leading-5
+                          | #{message.author}, #{message.timeString}
+      h3.mt-6.text-center.text-xl.leading-9.font-extrabold.text-gray
+        | Follow someone new
+      ul.mt-6
+        each user in users
+          li.text-center.text-xl.leading-9.font-extrabold.text-gray
+            form(action='/follow' method='POST')
+              input(type='hidden' name='username' value=user)
+              button.inline-flex.justify-center.py-2.px-4.border.border-transparent.text-sm.font-medium.rounded-md.text-white.bg-indigo-600(class='hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500')
+                =user
