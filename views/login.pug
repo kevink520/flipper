@@ -1,0 +1,23 @@
+extends layout.pug
+
+block body
+      div(class='sm:mx-auto sm:w-full sm:max-w-md')
+        h2.mt-6.text-center.text-3xl.leading-9.font-extrabold
+          | Sign in to Flipper
+        div.mt-8(class='sm:mx-auto sm:w-full sm:max-w-md')
+          .bg-white.py-8.px-4.shadow(class='sm:rounded-lg sm:px-2 lg:px-3')
+            form(action='#' method='POST')
+              div
+                label.block.text-sm.font-medium.leading-5.text-g
+                  | Username
+                .mt-1.rounded-md.shadow-sm
+                  input#username.appearance-none.rounded-none.relative.block.w-full.px-3.py-2.border.border-gray-300.placeholder-gray-500.text-gray-900.rounded-t-md(class='focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' name='username')
+              .mt-6
+                label.block.text-sm.font-medium.leading-5.text-g
+                  | Password
+                .mt-1.rounded-md.shadow-sm
+                  input#password.appearance-none.rounded-none.relative.block.w-full.px-3.py-2.border.border-gray-300.placeholder-gray-500.text-gray-900.rounded-t-md(class='focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm' name='password')
+              .mt-6
+                span.block.w-full.rounded-md.shadow-sm
+                  button.group.relative.w-full.flex.justify-center.py-2.px-4.border.border-transparent.text-sm.font-medium.rounded-md.text-white.bg-indigo-600(class='hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500')
+                    | Sign in 
