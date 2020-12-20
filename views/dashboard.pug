@@ -5,6 +5,8 @@ block body
     div.text-center
       h2.mt-6.text-center.text-3xl.leading-9.font-extrabold
         | Welcome #{currentUsername}
+        a.ml-3.text-base.text-indigo-500(href='/sign-out')
+          | (Sign out)
       a.mt-6.text-center.text-1xl.leading-9.font-extrabold.text-indigo-500(href='/post')
         | Post a message
       if timeline.length > 0

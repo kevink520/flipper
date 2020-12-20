@@ -83,10 +83,10 @@ app.post('/', async (req, res) => {
 
   const handleSignup = async (username, password) => {
     const userid = await aincr('userid');
-    await ahset('users', username, userid);
+    client.hset('users', username, userid);
     const saltRounds = 10;
     const hash = await bcrypt.hash(password, saltRounds);
-    await ahset(`user:${userid}`, 'hash', hash, 'username', username);
+    client.hset(`user:${userid}`, 'hash', hash, 'username', username);
     saveSessionAndRenderDashboard(userid);
   };
 
@@ -151,12 +151,25 @@ app.post('/follow', async (req, res) => {
 
   const { username } = req.body;
   try {
-    const currentUsername = await ahget(`user:${userid}`, 'username');
+    const currentUsername = await ahget(`user:${req.session.userid}`, 'username');
     client.sadd(`following:${currentUsername}`, username);
     client.sadd(`followers:${username}`, currentUsername);
     res.redirect('/');
   } catch (err) {
     res.render('error', { message: err.message });
+  }
+});
+
+app.get('/sign-out', async (req, res) => {
+  try {
+    if (req.session.userid) {
+      const sessionDestroy = promisify(req.session.destroy).bind(req.session);
+      await sessionDestroy();
+    }
+
+    res.redirect('/');
+  } catch (err) {
+    res.redirect('error', { message: err.message });
   }
 });
 
