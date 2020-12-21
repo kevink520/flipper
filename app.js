@@ -7,7 +7,7 @@ const { promisify } = require('util');
 const { formatDistance } = require('date-fns');
 
 const app = express();
-const client = redis.createClient();
+const client = redis.createClient(process.env.REDIS_URL);
 const RedisStore = require('connect-redis')(session);
 const ahget = promisify(client.hget).bind(client);
 const asmembers = promisify(client.smembers).bind(client);
